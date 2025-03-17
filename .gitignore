@@ -1,0 +1,15 @@
+node_modules/
+*.log
+.env
+npm-debug.log*
+.claude
+dist/
+.DS_Store
+build/
+.cache/
+CLAUDE.md
+coverage/
+.npm
+.nyc_output
+tmp/
+*.tmp
