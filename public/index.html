@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BackupBuddy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>BackupBuddy</h1>
+            <p>Simple File Backup Tool</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <h2>Create New Backup Job</h2>
+                <form id="backup-form">
+                    <div class="form-group">
+                        <label for="source-path">Source Directory:</label>
+                        <input type="text" id="source-path" name="sourcePath" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="backup-path">Backup Directory:</label>
+                        <input type="text" id="backup-path" name="backupPath" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="job-name">Job Name:</label>
+                        <input type="text" id="job-name" name="jobName" required>
+                    </div>
+
+                    <button type="submit">Create Backup Job</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Active Backup Jobs</h2>
+                <div id="jobs-list">
+                    <p>No backup jobs yet.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
