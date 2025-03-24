@@ -44,6 +44,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p>Source: ${job.source_path}</p>
                             <p>Backup: ${job.backup_path}</p>
                             <p>Status: ${job.status}</p>
+                            <p>Files: ${job.file_count || 0}</p>
+                            <p>Last backup: ${job.last_backup ? new Date(job.last_backup).toLocaleString() : 'Never'}</p>
+                            <button onclick="runBackup(${job.id})" class="run-btn">Run Backup</button>
                         </div>
                     `).join('');
                 }
@@ -55,3 +58,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loadJobs();
 });
+
+function runBackup(jobId) {
+    if (!confirm('Are you sure you want to run this backup?')) {
+        return;
+    }
+
+    fetch(`/api/backup-jobs/${jobId}/run`, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            alert(`Backup completed! ${result.filesCopied}/${result.totalFiles} files copied.`);
+        } else {
+            alert(`Backup failed: ${result.error}`);
+        }
+        loadJobs();
+    })
+    .catch(error => {
+        console.error('Error running backup:', error);
+        alert('Failed to run backup');
+    });
+}

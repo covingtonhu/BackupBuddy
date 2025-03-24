@@ -89,3 +89,33 @@ button:hover {
 #jobs-list {
     color: #7f8c8d;
 }
+
+.job-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+.job-item h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.job-item p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 14px;
+}
+
+.run-btn {
+    background-color: #27ae60;
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 12px;
+}
+
+.run-btn:hover {
+    background-color: #229954;
+}
