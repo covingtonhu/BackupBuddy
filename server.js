@@ -2,9 +2,11 @@ const express = require('express');
 const path = require('path');
 const { initDatabase, createBackupJob, getAllBackupJobs } = require('./database');
 const { performBackup } = require('./backup');
+const FileMonitor = require('./monitor');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const monitor = new FileMonitor();
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -22,6 +24,7 @@ app.post('/api/backup-jobs', async (req, res) => {
         }
 
         const job = await createBackupJob(jobName, sourcePath, backupPath);
+        monitor.addJob(job);
         res.json(job);
     } catch (error) {
         console.error('Error creating backup job:', error);
@@ -60,8 +63,15 @@ app.post('/api/backup-jobs/:id/run', async (req, res) => {
 initDatabase().then(() => {
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
+        monitor.startMonitoring();
     });
 }).catch(err => {
     console.error('Failed to initialize database:', err);
     process.exit(1);
+});
+
+process.on('SIGINT', () => {
+    console.log('Shutting down...');
+    monitor.stopAll();
+    process.exit(0);
 });
