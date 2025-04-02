@@ -73,7 +73,7 @@ async function performBackup(jobId, sourcePath, backupPath) {
         await updateBackupJob(jobId, {
             last_backup: new Date().toISOString(),
             file_count: copiedCount,
-            status: 'completed'
+            status: 'active'
         });
 
         console.log(`Backup completed: ${copiedCount}/${files.length} files copied`);
@@ -83,8 +83,8 @@ async function performBackup(jobId, sourcePath, backupPath) {
         console.error(`Backup failed for job ${jobId}:`, error);
 
         await updateBackupJob(jobId, {
-            status: 'failed'
-        });
+            status: 'error'
+        }).catch(err => console.error('Failed to update job status:', err));
 
         return { success: false, error: error.message };
     }
